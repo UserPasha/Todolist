@@ -1,42 +1,69 @@
 import React from 'react';
 import ToDoListHeader from "./ToDoListHeader";
 import Button from "./Button";
-import {TaskType} from "./App";
+import {FilterValuesType, TaskType} from "./App";
 import Task from "./Task";
 
 type ToDoListPropsType = {
     title: string
     tasks: Array<TaskType>
+    removeTask: (taskID: number) => void
+    changeFilter: (filter: FilterValuesType) => void
 }
 
 
-function ToDoList(props: ToDoListPropsType) {
+const ToDoList = (props: ToDoListPropsType) => {
+    //const taskComponents = props.tasks.map(t => <Task key={t.id} {...t}/>)
+    const taskComponents = props.tasks.map(t => {
+        return (
+            <Task
+                key={t.id}
+                id={t.id}
+                title={t.title}
+                isDone={t.isDone}
+                removeTask={props.removeTask}
+            />
+//  or that syntax's:
+// <Task
+//        key={t.id}
+//        {...t}/>
+
+        )
+    })
     return (
-        <div className="App">
+        <div>
+
+
+            <ToDoListHeader title={props.title}/>
+
             <div>
-                <ToDoListHeader title={props.title}/>
+                <input/>
+                <button>+</button>
+            </div>
+            <ul>
 
-                <div>
-                    <input/>
-                    <button>+</button>
-                </div>
-                <ul>
-                    <Task key={props.tasks[0].id}
-                          {...props.tasks[0]}/>
-                    <Task key={props.tasks[1].id}
-                          {...props.tasks[1]}/>
-                    <Task key={props.tasks[2].id}
-                          {...props.tasks[2]}/>
+                {taskComponents}
 
-                </ul>
-                <div>
-                    <Button title={"All"}/>
-                    <Button title={"Active"}/>
-                    <Button title={"Completed"}/>
+                {/* <Task key={props.tasks[0].id}
+                      {...props.tasks[0]}/>
+                <Task key={props.tasks[1].id}
+                      {...props.tasks[1]}/>
+                <Task key={props.tasks[2].id}
+                      {...props.tasks[2]}/>*/}
 
-                </div>
+            </ul>
+            <div>
+                <Button title={"All"}
+                        onClickCallBAck={() => props.changeFilter("all")}/>
+                <Button title={"Active"}
+                        onClickCallBAck={() => props.changeFilter("active")}/>
+                <Button title={"Completed"}
+                        onClickCallBAck={() => props.changeFilter("completed")}/>
+
+
             </div>
         </div>
+
     );
 }
 
