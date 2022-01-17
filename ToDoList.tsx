@@ -1,18 +1,20 @@
-import React from 'react';
+import React, {useState, KeyboardEvent, ChangeEvent} from 'react';
 import ToDoListHeader from "./ToDoListHeader";
 import Button from "./Button";
 import {FilterValuesType, TaskType} from "./App";
 import Task from "./Task";
 
+
 type ToDoListPropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (taskID: number) => void
+    removeTask: (taskID: string) => void
     changeFilter: (filter: FilterValuesType) => void
+    addTask: (title: string) => void
 }
 
-
 const ToDoList = (props: ToDoListPropsType) => {
+    const [title, setTitle] = useState<string>("")
     //const taskComponents = props.tasks.map(t => <Task key={t.id} {...t}/>)
     const taskComponents = props.tasks.map(t => {
         return (
@@ -30,15 +32,29 @@ const ToDoList = (props: ToDoListPropsType) => {
 
         )
     })
+    const onChangeSetTitle = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
+    const OnClickFilterAll = () => props.changeFilter("all")
+    const onClickFilterActive =() => props.changeFilter("active")
+    const onClickFilterCompleted = () => props.changeFilter("completed")
+    const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            onClickAddTask()
+        }  /*e.key === "Enter"&& onClickAddTask() - the same */
+    }
+    const onClickAddTask = () => {
+        props.addTask(title)
+        setTitle("")
+    }
     return (
         <div>
-
-
             <ToDoListHeader title={props.title}/>
-
             <div>
-                <input/>
-                <button>+</button>
+                <input
+                    value={title}
+                    onChange={onChangeSetTitle}//input.value
+                    onKeyPress={onKeyPressAddTask}
+                />
+                <button onClick={onClickAddTask}>+</button>
             </div>
             <ul>
 
@@ -54,11 +70,11 @@ const ToDoList = (props: ToDoListPropsType) => {
             </ul>
             <div>
                 <Button title={"All"}
-                        onClickCallBAck={() => props.changeFilter("all")}/>
+                        onClickCallBAck={OnClickFilterAll}/>
                 <Button title={"Active"}
-                        onClickCallBAck={() => props.changeFilter("active")}/>
+                        onClickCallBAck={onClickFilterActive}/>
                 <Button title={"Completed"}
-                        onClickCallBAck={() => props.changeFilter("completed")}/>
+                        onClickCallBAck={onClickFilterCompleted}/>
 
 
             </div>
