@@ -64,9 +64,12 @@ function App() {
     const removeTask = (taskID: string) => {
         // const filteredTasks = tasks.filter(t => t.id !== taskID)
         setTasks(tasks.filter(t => t.id !== taskID))
-        console.log()
-    }
 
+    }
+    const changeTaskStatus = (taskID: string, isDone: boolean) => { //для тестов в параметрах нужно добавить isDone: boolean
+        const updatedBooleanTasks = tasks.map(t => t.id === taskID ? {...t, isDone: isDone} : t)
+        setTasks(updatedBooleanTasks)                             // {...t, isDone: isDone}  = {...t, isDone}
+    }
 
     //UI
     return (
@@ -76,9 +79,11 @@ function App() {
             <ToDoList
                 title={ToDoListTitle}
                 tasks={tasksForRender}
+                filter={filter}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
+                changeTaskStatus={changeTaskStatus}
             />
             {/*  <ToDoList title={ToDoListTitle_2} tasks={task_2}/>
             <ToDoList title={ToDoListTitle_3} tasks={task_3}/>
