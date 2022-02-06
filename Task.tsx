@@ -1,10 +1,10 @@
-import React, {ChangeEvent}from 'react';
+import React, {ChangeEvent} from 'react';
 import {TaskType} from "./App";
 
 type TaskPropsType = TaskType & {
-    removeTask: (taskID: string) => void
-    changeTaskStatus: (taskID: string, isDone: boolean) => void
-
+    removeTask: (todolistsID: string, taskID: string) => void
+    changeTaskStatus: (todolistsID: string, taskID: string, isDone: boolean) => void
+    todolistsID: string
 }
 
 
@@ -13,16 +13,21 @@ const Task = (props: TaskPropsType) => {
     const isDone = props.isDone
     const title = props.title
     const removeTask = props.removeTask
- //   const onChangeStatus = () => props.changeTaskStatus(id, isDone)
-    const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) =>
-        props.changeTaskStatus(id, e.currentTarget.checked)
+
+    //   const onChangeStatus = () => props.changeTaskStatus(id, isDone)
+    const onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
+
+        props.changeTaskStatus(props.todolistsID, id, e.currentTarget.checked)
+    }
     return (
 
-        <li className={isDone? "is-done" : ""}><input type="checkbox"
-                   onChange ={onChangeStatus}
-                   checked={isDone}/>
+        <li className={isDone ? "is-done" : ""}>
+            <input
+                type="checkbox"
+                onChange={onChangeStatus}
+                checked={isDone}/>
             <span>{title}</span>
-            <button onClick={() => removeTask(id)}>X</button>
+            <button onClick={() => removeTask(props.todolistsID, id)}>X</button>
         </li>
 
     );
