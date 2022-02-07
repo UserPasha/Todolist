@@ -14,7 +14,8 @@ type ToDoListPropsType = {
     changeFilter: (todolistsID:string, ilter: FilterValuesType) => void
     addTask: (todolistsID:string, title: string) => void
     changeTaskStatus: (todolistsID:string, taskID: string, isDone: boolean) => void
-   /* deleteTodolist:(todolistsID:string)=> void*/
+   deleteTodolist:(todolistsID:string)=> void
+    newTodolist: ()=> void
 }
 
 const ToDoList = (props: ToDoListPropsType) => {
@@ -60,7 +61,8 @@ const ToDoList = (props: ToDoListPropsType) => {
             <ToDoListHeader
                 title={props.title}
                 todolistsID={props.todolistsID}
-              /*  deleteTodolist={props.deleteTodolist}*/
+               deleteTodolist={props.deleteTodolist}
+                newTodolist={props.newTodolist}
             />
             <div>
                 <input

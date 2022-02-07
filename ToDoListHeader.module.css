@@ -2,10 +2,21 @@
     display: flex;
     position: relative;
 }
-.title button{
+.tit{
+    margin-left: 30px;
+}
+
+.selBut{
     height: 20px;
     border-radius: 20px;
     position: absolute;
     right: 0;
+    top: 20px;
+}
+.addlBut{
+    height: 20px;
+    border-radius: 20px;
+    position: absolute;
+    left: 0;
     top: 20px;
 }

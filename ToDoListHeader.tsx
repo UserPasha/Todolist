@@ -1,23 +1,25 @@
 import React from 'react';
-import c from"./ToDoListHeader.module.css"
+import c from "./ToDoListHeader.module.css"
 
 type ToDoListHeaderPropsType = {
-    title : string
-    todolistsID:string
-    // deleteTodolist:(todolistsID:string)=> void
+    title: string
+    todolistsID: string
+    deleteTodolist: (todolistsID:string) => void
+    newTodolist: ()=> void
 }
 
-const ToDoListHeader = ({title}: ToDoListHeaderPropsType) => {
-    // const onClickHandlerDeleteTodo=()=>{
-    //     props.deleteTodolist(props.id)
+const ToDoListHeader = (props: ToDoListHeaderPropsType) => {
+    // /*const onClickHandlerDeleteTodo = () => {
+    //     props.deleteTodolist
     //
-    //     }
+    // }
 
 
     return (
         <div className={c.title}>
-            <h3>{title}</h3>
-            {/*<button onClick={onClickHandlerDeleteTodo}>X</button>*/}
+            <button className={c.addlBut}onClick={ () => props.newTodolist}>+</button>
+            <h3 className={c.tit}>{props.title}</h3>
+            <button className={c.selBut} onClick={ () => props.deleteTodolist(props.todolistsID) }>X</button>
         </div>
     );
 };
