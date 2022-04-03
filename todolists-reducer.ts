@@ -8,11 +8,11 @@ export const todolistsReducer = (state: Array<TodolistType>, action: todolistsRe
             // delete tasks[id];
             // setTasks({...tasks});
             // const newState=[...state]
-            return state.filter((el)=>el.id!==action.payload.id)
+            return state.filter((el)=>el.id!==action.id)
         }
         case "ADD-TODOLIST":{
             // let newTodolistId = v1();
-            let newTodolist: TodolistType = {id: v1(), title: action.payload.title, filter: 'all'};
+            let newTodolist: TodolistType = {id: action.todolistId, title: action.title, filter: 'all'};
             // setTodolists([newTodolist, ...todolists]);
             return [...state, newTodolist]
         }
@@ -43,7 +43,7 @@ export type removeTodolistACType = ReturnType<typeof removeTodolistAC>
 export const removeTodolistAC = (todolistId1: string) => {
     return {
         type: 'REMOVE-TODOLIST',
-        payload: {id: todolistId1}
+        id: todolistId1
     } as const
 }
 
@@ -51,9 +51,10 @@ export type addTodolistACType=ReturnType<typeof addTodolistAC>
 export const addTodolistAC=(newTodolistTitle:string)=>{
     return{
         type: 'ADD-TODOLIST',
-        payload:{
-            title: newTodolistTitle
-        }
+
+            title: newTodolistTitle,
+            todolistId: v1()
+
     }as const
 }
 
