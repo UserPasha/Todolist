@@ -3,36 +3,19 @@ import {v1} from "uuid";
 
 const initState: Array<TodolistType> = []
 
-export const todolistsReducer = (state=initState, action: todolistsReducerType) => {
+export const todolistsReducer = (state=initState, action: todolistsReducerType): Array<TodolistType>=> {
     switch (action.type) {
         case "REMOVE-TODOLIST": {
-            // setTodolists(todolists.filter(tl => tl.id != id));
-            // delete tasks[id];
-            // setTasks({...tasks});
-            // const newState=[...state]
             return state.filter((el)=>el.id!==action.id)
         }
         case "ADD-TODOLIST":{
-            // let newTodolistId = v1();
             let newTodolist: TodolistType = {id: action.todolistId, title: action.title, filter: 'all'};
-            // setTodolists([newTodolist, ...todolists]);
             return [newTodolist, ...state ]
         }
         case "CHANGE-TODOLIST-TITLE":{
-            // const todolist = todolists.find(tl => tl.id === id);
-            // if (todolist) {
-            //     // если нашёлся - изменим ему заголовок
-            //     todolist.title = title;
-            //     setTodolists([...todolists]);
-            // }
             return state.map((el)=>el.id===action.payload.id ? {...el,title:action.payload.title} : el)
         }
         case "CHANGE-TODOLIST-FILTER":{
-            // let todolist = todolists.find(tl => tl.id === todolistId);
-            // if (todolist) {
-            //     todolist.filter = value;
-            //     setTodolists([...todolists])
-            // }
             return state.map((el)=>el.id===action.payload.id ? {...el,filter:action.payload.filter} : el)
         }
         default:
@@ -42,10 +25,10 @@ export const todolistsReducer = (state=initState, action: todolistsReducerType) 
 
 type todolistsReducerType = removeTodolistACType| addTodolistACType | changeTodolistTitleACType | changeTodolistFilterACType
 export type removeTodolistACType = ReturnType<typeof removeTodolistAC>
-export const removeTodolistAC = (todolistId1: string) => {
+export const removeTodolistAC = (todolistId: string) => {
     return {
         type: 'REMOVE-TODOLIST',
-        id: todolistId1
+        id: todolistId
     } as const
 }
 
@@ -61,22 +44,22 @@ export const addTodolistAC=(newTodolistTitle:string)=>{
 }
 
 export type changeTodolistTitleACType=ReturnType<typeof changeTodolistTitleAC>
-export const changeTodolistTitleAC=(todolistId2:string,newTodolistTitle:string)=>{
+export const changeTodolistTitleAC=(todolistId:string,newTodolistTitle:string)=>{
     return{
         type: 'CHANGE-TODOLIST-TITLE',
         payload:{
-            id: todolistId2,
+            id: todolistId,
             title: newTodolistTitle
         }
     }as const
 }
 
 export type changeTodolistFilterACType=ReturnType<typeof changeTodolistFilterAC>
-export  const changeTodolistFilterAC=(todolistId2:string,newFilter:FilterValuesType)=>{
+export  const changeTodolistFilterAC=(todolistId:string,newFilter:FilterValuesType)=>{
     return{
         type: 'CHANGE-TODOLIST-FILTER',
         payload:{
-            id: todolistId2,
+            id: todolistId,
             filter: newFilter
         }
     }as const
