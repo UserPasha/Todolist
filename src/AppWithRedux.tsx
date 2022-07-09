@@ -46,7 +46,7 @@ function AppWithRedux() {
         dispatch(addTaskAC(title, todolistId))
     }, [dispatch])
 
-    const changeFilter = useCallback((value: FilterValuesType, todolistId: string) => {
+    const changeFilter = useCallback((todolistId: string, value: FilterValuesType ) => {
             dispatch(changeTodolistFilterAC(todolistId, value))
         }
         ,
@@ -124,7 +124,7 @@ function AppWithRedux() {
                 </Grid>
             </Container>
         </div>
-    );
+);
 }
 
 export default AppWithRedux;
