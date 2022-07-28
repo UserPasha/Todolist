@@ -1,27 +1,28 @@
-import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
-import {Button, TextField} from "@material-ui/core";
-
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
+import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import { AddBox } from '@mui/icons-material';
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
-export const  AddItemForm= memo((props: AddItemFormPropsType) =>{
-    console.log("addForm rendered")
-    let [title, setTitle] = useState<string>("")
+export const AddItemForm = React.memo(function (props: AddItemFormPropsType) {
+    console.log('AddItemForm called')
+
+    let [title, setTitle] = useState('')
     let [error, setError] = useState<string | null>(null)
 
     const addItem = () => {
-        if (title.trim() !== "") {
+        if (title.trim() !== '') {
             props.addItem(title);
-            setTitle("");
+            setTitle('');
         } else {
-            setError("Title is required");
+            setError('Title is required');
         }
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-
         setTitle(e.currentTarget.value)
     }
 
@@ -35,22 +36,16 @@ export const  AddItemForm= memo((props: AddItemFormPropsType) =>{
     }
 
     return <div>
-
-        <TextField
-            error={!!error}
-            id="outlined-basic"
-            label={title}
-            variant="outlined"
-            value={title}
-            onChange={onChangeHandler}
-            onKeyPress={onKeyPressHandler}
-            helperText={error}
-            size={"small"}
+        <TextField variant="outlined"
+                   error={!!error}
+                   value={title}
+                   onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}
+                   label="Title"
+                   helperText={error}
         />
-
-
-        <Button variant="contained" onClick={addItem}
-                style={{maxWidth: '38px', maxHeight: '38px', minWidth: '38px', minHeight: '38px'}}>+</Button>
-
+        <IconButton color="primary" onClick={addItem}>
+            <AddBox/>
+        </IconButton>
     </div>
 })
